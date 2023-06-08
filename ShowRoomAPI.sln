@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowRoomAPI", "ShowRoomAPI.csproj", "{CB7D3B76-0C43-4425-87B0-D23EDB0BBE62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowRoomAPI", "ShowRoomAPI.csproj", "{CB7D3B76-0C43-4425-87B0-D23EDB0BBE62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowRoomAPI.Business", "..\ShowRoomAPI.Business\ShowRoomAPI.Business.csproj", "{A10EA2FF-A729-49BF-B1FA-FEE994AAD554}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowRoomAPI.DataAccess", "..\ShowRoomAPI.DataAccess\ShowRoomAPI.DataAccess.csproj", "{88A45EB5-B88A-4CD4-B9C7-4C65EA1C3143}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{CB7D3B76-0C43-4425-87B0-D23EDB0BBE62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB7D3B76-0C43-4425-87B0-D23EDB0BBE62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB7D3B76-0C43-4425-87B0-D23EDB0BBE62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A10EA2FF-A729-49BF-B1FA-FEE994AAD554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A10EA2FF-A729-49BF-B1FA-FEE994AAD554}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A10EA2FF-A729-49BF-B1FA-FEE994AAD554}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A10EA2FF-A729-49BF-B1FA-FEE994AAD554}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88A45EB5-B88A-4CD4-B9C7-4C65EA1C3143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A45EB5-B88A-4CD4-B9C7-4C65EA1C3143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A45EB5-B88A-4CD4-B9C7-4C65EA1C3143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A45EB5-B88A-4CD4-B9C7-4C65EA1C3143}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
