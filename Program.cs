@@ -1,6 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using ShowRoomAPI.DataAccess.Implementation;
+using ShowRoomAPI.DataAccess.Interface;
+using ShowRoomAPI.Models.Entitas;
+
 var builder = WebApplication.CreateBuilder(args);
 
+//connect to database
+builder.Services.AddDbContext<ShowRoomDataContext>( op => {
+    op.UseNpgsql(builder.Configuration.GetConnectionString("ShowroomDb"));
+});
+
 // Add services to the container.
+builder.Services.AddTransient<ITransientService, TransientService>();
+builder.Services.AddScoped<IScopedService, ScopedService>();
+builder.Services.AddScoped<ICarRepository, CarRepository>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

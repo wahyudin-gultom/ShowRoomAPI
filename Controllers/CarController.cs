@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ShowRoomAPI.DataAccess.Interface;
 using ShowRoomAPI.Models.Entitas;
+using System.Text;
 
 namespace ShowRoomAPI.Controllers
 {
@@ -8,48 +11,28 @@ namespace ShowRoomAPI.Controllers
     [ApiController]
     public class CarController : ControllerBase
     {
-        public Car Data { get; set; }
 
-        public CarController()
+        private readonly ICarRepository _repo;
+
+        public CarController(ICarRepository repo)
         {
-            Data = new Car()
-            {
-                SerialNo = "342348032744",
-                Brand = "Toyota",
-                ModelNo = "afjal",
-                Price = 1000000000m,
-                Year = 2023
-            };
+            _repo = repo;
         }
 
         [HttpGet("")]
-        public Task<Car> Index()
+        public async Task<IActionResult> GetDetail()
         {
-            return Task.FromResult(Data);
+            var list = await _repo.GetAllAsync();
+            return Ok(list.FirstOrDefault());
         }
 
-        [HttpGet("SerialNoWithoutParam")]
-        public Task<string> GetSerialNoWithoutParam()
+        [HttpPost("")]
+        public async Task<IActionResult> Save([FromBody] Car entity)
         {
-            var res = Task.Run(() => GetSerial());
+            var iscansave = await _repo.IsCanSave(entity);
+            if (iscansave) return Ok("sukses");
 
-            return res;
-        }
-
-        [HttpGet("SerialNoWithParam")]
-        public string GetSerialNoWithParam()
-        {
-            return GetSerial(Data.SerialNo);
-        }
-
-        private string GetSerial()
-        {
-            return Data.SerialNo;
-        }
-
-        private string GetSerial(string serialNo)
-        {
-            return serialNo;
+            return BadRequest("Gagal");
         }
     }
 }
