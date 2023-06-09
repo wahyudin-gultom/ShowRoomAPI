@@ -1,8 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace ShowRoomAPI.Models.Entitas
 {
-    public class Car
+    public abstract class GeneralColumn {
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public bool IsRemoved { get; set; }
+    }
+
+    public class Car: GeneralColumn
     {
         [Required, Key]
         public string SerialNo { get; set; }
@@ -13,5 +20,6 @@ namespace ShowRoomAPI.Models.Entitas
 
         [Required]
         public string Type { get; set; }
+
     }
 }
