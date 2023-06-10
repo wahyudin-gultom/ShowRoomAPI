@@ -22,7 +22,7 @@ builder.Services.AddDbContext<ShowRoomDataContext>( op => {
 builder.Services.AddTransient<ITransientService, TransientService>();
 builder.Services.AddScoped<IScopedService, ScopedService>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
-builder.Services.AddScoped<IJwtBearerManager, JwtBearerManager>();
+//builder.Services.AddScoped<IJwtBearerManager, JwtBearerManager>();
 
 //Configure Google pub/sub
 var projectId = builder.Configuration["GcpCredential:projectId"];
