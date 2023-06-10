@@ -24,7 +24,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Build with dotnet
-        run: dotnet build .ShowRoomApi.sln --configuration Release --no-restore
+        run: dotnet build ./ShowRoomApi.sln --configuration Release --no-restore
 
       - name: dotnet publish
         run: dotnet publish ./ShowRoomApi.sln --configuration --no-build
