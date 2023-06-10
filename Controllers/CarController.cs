@@ -33,17 +33,8 @@ namespace ShowRoomAPI.Controllers
             return Ok(await _repo.GetAllAsync());
         }
 
-        [HttpGet("send")]
-        public async Task<IActionResult> Send(string message)
-        {
-            var publishId = await _googlePubSub.Publish(message);
-            
-            //var subscribeMsg = await _googlePubSub.Receive();
-            return Ok(publishId);
-        }
-
         [HttpGet("")]
-        public async Task<IActionResult> GetDetail(string msg)
+        public async Task<IActionResult> GetDetail(string serialNo)
         {
             var sb = new StringBuilder();
             
@@ -54,9 +45,8 @@ namespace ShowRoomAPI.Controllers
             var claims = _jwtManager.GetAuthTokenResult(tokenheader);
             if (claims == null) return BadRequest("Error");
 
-
-            var list = await _repo.GetAllAsync();
-            return Ok(list);
+            var detail = await _repo.GetById(serialNo);
+            return Ok(detail);
         }
 
         [HttpPost("")]
@@ -68,5 +58,34 @@ namespace ShowRoomAPI.Controllers
             return BadRequest("Gagal");
         }
 
+        [HttpPatch("{serialNo}")]
+        public async Task<IActionResult> Update([FromRoute] string serialNo, [FromBody] VMCar entity)
+        {
+            var detail = await _repo.GetById(serialNo);
+            if (detail == null) return BadRequest("Data tidak tersedia");
+            
+            detail.Brand = entity.Brand;
+            detail.ModelNo = entity.ModelNo;
+            detail.Year = entity.Year;
+            detail.Price = entity.Price;
+            detail.Type = entity.Type;
+
+            var iscansave = await _repo.IsCanUpdate(detail);
+            if (iscansave) return Ok("sukses");
+
+            return BadRequest("Gagal update");
+        }
+
+        [HttpDelete("{serialNo}")]
+        public async Task<IActionResult> Delete([FromRoute] string serialNo)
+        {
+            var detail = await _repo.GetById(serialNo);
+            if (detail == null) return BadRequest("Data tidak tersedia");
+
+            var iscansave = await _repo.IsCanDelete(detail);
+            if (iscansave) return Ok("sukses");
+
+            return BadRequest("Gagal update");
+        }
     }
 }

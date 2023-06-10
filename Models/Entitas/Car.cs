@@ -22,4 +22,15 @@ namespace ShowRoomAPI.Models.Entitas
         public string Type { get; set; }
 
     }
+
+    public class VMCar
+    {
+        public string Brand { get; set; }
+        public string ModelNo { get; set; }
+        public int Year { get; set; }
+        public decimal Price { get; set; }
+
+        [Required]
+        public string Type { get; set; }
+    }
 }

@@ -27,9 +27,6 @@ namespace ShowRoomAPI.Controllers
             {
                 var generateToken = _config.GenerateToken(UserData.UserName);
                 return Ok(generateToken);
-                //_config.GetAuthTokenResult(generateToken);
-
-                //return Ok(_jwtManager.GenerateToken());
             }
             return BadRequest("Failed!");
         }
