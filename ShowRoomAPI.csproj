@@ -30,4 +30,13 @@
     <Folder Include="Library\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="GooglePubSubService">
+      <HintPath>Library\GooglePubSubService.dll</HintPath>
+    </Reference>
+    <Reference Include="JwtLib">
+      <HintPath>Library\JwtLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
