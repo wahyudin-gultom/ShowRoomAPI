@@ -4,9 +4,9 @@ using System.Text;
 namespace ShowRoomAPI.Models.Entitas
 {
     public abstract class GeneralColumn {
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-        public bool IsRemoved { get; set; }
+        //public DateTime CreatedDate { get; set; }
+        //public DateTime? UpdatedDate { get; set; }
+        //public bool IsRemoved { get; set; } = false;
     }
 
     public class Car: GeneralColumn

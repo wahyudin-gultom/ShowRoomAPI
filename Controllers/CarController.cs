@@ -10,19 +10,17 @@ using System.Text;
 
 namespace ShowRoomAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CarController : ControllerBase
     {
         private readonly JwtConfig _config;
         private readonly ICarRepository _repo;
-        private readonly IJwtBearerManager _jwtManager;
         private readonly GooglePubSubService _googlePubSub;
-        public CarController(ICarRepository repo, IJwtBearerManager jwtManager, GooglePubSubService googlePubSub, IOptions<JwtConfig> config)
+        public CarController(ICarRepository repo,GooglePubSubService googlePubSub, IOptions<JwtConfig> config)
         {
             _repo = repo;
-            _jwtManager = jwtManager;
             _googlePubSub = googlePubSub;
             _config = config.Value;
         }
@@ -30,19 +28,24 @@ namespace ShowRoomAPI.Controllers
         [HttpGet("All")]
         public async Task<IActionResult> GetAll()
         {
+            var tokenheader = Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(tokenheader)) return BadRequest("Token invalid");
+            tokenheader = tokenheader.Substring("Bearer ".Length);
+
+            var claims = _config.GetAuthTokenResult(tokenheader);
+            if (claims == null) return BadRequest("Error");
+
             return Ok(await _repo.GetAllAsync());
         }
 
         [HttpGet("")]
         public async Task<IActionResult> GetDetail(string serialNo)
         {
-            var sb = new StringBuilder();
-            
             var tokenheader = Request.Headers["Authorization"].ToString();
             if (string.IsNullOrEmpty(tokenheader)) return BadRequest("Token invalid");
             tokenheader = tokenheader.Substring("Bearer ".Length);
 
-            var claims = _jwtManager.GetAuthTokenResult(tokenheader);
+            var claims = _config.GetAuthTokenResult(tokenheader);
             if (claims == null) return BadRequest("Error");
 
             var detail = await _repo.GetById(serialNo);
@@ -52,6 +55,13 @@ namespace ShowRoomAPI.Controllers
         [HttpPost("")]
         public async Task<IActionResult> Save([FromBody] Car entity)
         {
+            var tokenheader = Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(tokenheader)) return BadRequest("Token invalid");
+            tokenheader = tokenheader.Substring("Bearer ".Length);
+
+            var claims = _config.GetAuthTokenResult(tokenheader);
+            if (claims == null) return BadRequest("Error");
+
             var iscansave = await _repo.IsCanSave(entity);
             if (iscansave) return Ok("sukses");
 
@@ -61,6 +71,13 @@ namespace ShowRoomAPI.Controllers
         [HttpPatch("{serialNo}")]
         public async Task<IActionResult> Update([FromRoute] string serialNo, [FromBody] VMCar entity)
         {
+            var tokenheader = Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(tokenheader)) return BadRequest("Token invalid");
+            tokenheader = tokenheader.Substring("Bearer ".Length);
+
+            var claims = _config.GetAuthTokenResult(tokenheader);
+            if (claims == null) return BadRequest("Error");
+
             var detail = await _repo.GetById(serialNo);
             if (detail == null) return BadRequest("Data tidak tersedia");
             

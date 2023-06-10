@@ -27,11 +27,7 @@
     <Folder Include="DataAccess\Generic\" />
     <Folder Include="Models\Response\" />
     <Folder Include="Models\Request\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\GooglePubSubService\GooglePubSubService.csproj" />
-    <ProjectReference Include="..\JwtLib\JwtLib.csproj" />
+    <Folder Include="Library\" />
   </ItemGroup>
 
 </Project>
